@@ -1,32 +1,30 @@
-package dfs
+package bfs
 
 import (
 	"github.com/nelsonlpco/mazeresolver/domain/collections"
-	"github.com/nelsonlpco/mazeresolver/domain/collections/stack"
+	"github.com/nelsonlpco/mazeresolver/domain/collections/queue"
 	"github.com/nelsonlpco/mazeresolver/domain/maze"
 	"github.com/nelsonlpco/mazeresolver/domain/node"
 )
 
-// DepthFirstSearch percore o labirinto em busca do local de chegada, em caso de sucesso retorn o Node de sucesso
-// em falha não retorna nada
-func DepthFirstSearch(
+func BreadthFirstSearch(
 	initial node.Node,
 	goalTest func(state maze.Location) bool,
 	successors func(state maze.Location) []maze.Location,
 ) *node.Node {
-	frontier := stack.New[node.Node]()
+	frontier := queue.New[node.Node]()
 	frontier.Push(initial)
 	explored := []maze.Location{initial.State}
 
 	for !frontier.IsEmpty() {
 		currentNode := frontier.Pop()
-		currentStat := currentNode.State
+		currentState := currentNode.State
 
-		if goalTest(currentStat) {
+		if goalTest(currentState) {
 			return &currentNode
 		}
 
-		for _, location := range successors(currentStat) {
+		for _, location := range successors(currentState) {
 			if collections.Contains(location, explored) {
 				continue
 			}

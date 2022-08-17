@@ -1,4 +1,4 @@
-package dfs
+package node
 
 import (
 	"github.com/nelsonlpco/mazeresolver/domain/maze"
